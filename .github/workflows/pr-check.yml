@@ -1,0 +1,74 @@
+name: PR check
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  pr-title:
+    name: pr-title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            perf
+            refactor
+            docs
+            test
+            data
+            build
+            ci
+            chore
+            style
+            revert
+          scopes: |
+            pipeline
+            model
+            api
+            web
+            viz
+            data
+            infra
+            docs
+            deps
+            release
+            main
+          requireScope: false
+          subjectPattern: ^[a-z].{0,70}[^.]$
+          subjectPatternError: "A descrição deve começar em minúscula, sem ponto final e ter até 72 caracteres."
+
+  branch-name:
+    name: branch-name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch name
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          re='^(feat|fix|perf|refactor|docs|test|data|build|ci|chore|style|revert|exp|hotfix)/([0-9]+-)?[a-z0-9]+(-[a-z0-9]+)*$'
+          if [[ "$BRANCH" =~ ^(dependabot/|release-please--) ]] || [[ "$BRANCH" =~ $re ]]; then
+            echo "✓ $BRANCH"
+          else
+            echo "::error::Branch '$BRANCH' fora do padrão <tipo>/<nº-issue>-<descricao> (ex.: feat/12-matching-espaco-temporal)"
+            exit 1
+          fi
+
+  commitlint:
+    name: commitlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: wagoid/commitlint-github-action@v6
+        with:
+          configFile: .commitlintrc.json
