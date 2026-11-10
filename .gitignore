@@ -1,0 +1,40 @@
+# Segredos
+.env
+*.pem
+
+# Dados (só amostras em data/sample/ são versionadas)
+data/raw/
+data/processed/
+data/cache/
+*.parquet
+*.nc
+*.hdf
+*.h5
+!data/sample/**
+
+# Modelos
+models/
+*.pkl
+*.joblib
+*.ckpt
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Node
+node_modules/
+dist/
+build/
+.next/
+
+# SO / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
