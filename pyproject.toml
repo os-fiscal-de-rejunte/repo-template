@@ -5,7 +5,7 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["ruff>=0.8", "pytest>=8", "pre-commit>=4"]
+dev = ["ruff>=0.17.4", "pytest>=8", "pre-commit>=4"]
 
 [build-system]
 requires = ["setuptools>=69"]
