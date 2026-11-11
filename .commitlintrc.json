@@ -2,7 +2,7 @@
   "extends": ["@commitlint/config-conventional"],
   "rules": {
     "type-enum": [2, "always", ["feat", "fix", "perf", "refactor", "docs", "test", "data", "build", "ci", "chore", "style", "revert"]],
-    "scope-enum": [2, "always", ["pipeline", "model", "api", "web", "viz", "data", "infra", "docs", "deps", "release", "main"]],
+    "scope-enum": [2, "always", ["pipeline", "model", "api", "web", "viz", "data", "infra", "docs", "deps", "deps-dev", "release", "main"]],
     "subject-case": [2, "always", "lower-case"],
     "subject-full-stop": [2, "never", "."],
     "header-max-length": [2, "always", 72],
